@@ -13,27 +13,43 @@ import static java.util.stream.Collectors.toList;
  */
 public class Synchronizer {
 
+    //Расширение исходных файлов без учета регистра
+    private final String sourceExtension;
+
+    //Расширение файлов в target-папке, которые надо синхронизировать
+    private final String targetExtension;
+
+    public Synchronizer(String sourceExtension, String targetExtension) {
+        this.sourceExtension = sourceExtension;
+        this.targetExtension = targetExtension;
+    }
+
     public void sync(String sourceFolder, String targetFolder) {
+
+        String srcExtensionIgnoreCase = "(?i)." + sourceExtension;
+        String targetExtensionIgnoreCase = "(?i)." + targetExtension;
 
         try {
             List<Path> sourceFiles = Files.list(Paths.get(sourceFolder)).collect(toList());
             List<Path> targetFiles = Files.list(Paths.get(targetFolder)).collect(toList());
 
 
+            //Удаление расширения без учета регистра
+
             List<String> sourceFileNamesWithoutExtension = sourceFiles
                     .stream()
-                    .map(f -> f.toFile().getName().replaceAll("(?i).jpg", ""))
+                    .map(f -> f.toFile().getName().replaceAll(srcExtensionIgnoreCase, ""))
                     .collect(toList());
 
             targetFiles
                     .stream()
                     .filter(f -> getName(f).endsWith(".CR2"))
                     .forEach(f -> {
-                        String nameNoExtension = getName(f).replace(".CR2", "");
-                        if (!sourceFileNamesWithoutExtension.contains(nameNoExtension)) {
+                        String nameWithoutExtension = getName(f).replaceAll(targetExtensionIgnoreCase, "");
+                        if (!sourceFileNamesWithoutExtension.contains(nameWithoutExtension)) {
                             try {
                                 Files.delete(f);
-                                System.out.println("No file " + nameNoExtension + " in source folder. File removed from target folder.");
+                                System.out.println("No file " + nameWithoutExtension + " in source folder. File removed from target folder.");
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
