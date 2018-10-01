@@ -19,10 +19,11 @@ public class FileListSynchronizer extends AbstractSynchronizer {
     private final String sourceFile;
 
     public FileListSynchronizer(String sourceFile, String targetDir, String sourceExtension, String targetExtension) {
-        super(sourceExtension, targetExtension, targetDir);
+        super(targetDir, sourceExtension, targetExtension);
         this.sourceFile = sourceFile;
     }
 
+    @Override
     protected List<Path> getSourceFiles() {
 
         List<Path> result = new LinkedList<>();

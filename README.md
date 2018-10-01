@@ -2,12 +2,15 @@
 ### Утилита для синхронизации файлов фото между директориями
 
 #### Запуск:
-java -jar <br>
+java -jar app.jar<br>
 -SD, --source-dir <source_dir> (or -SF, --source-file)<br> 
 -TD, --target-dir <target_dir> <br>
 -SE, --source-extension <source_extension> <br> 
 -TE, --target-extension <target_extension> <br>
-app.jar
+
+Пример:
+`java -jar filesync-1.0.jar -SD my_src -TD my_target -SE jpg -TE cr2`
+
 
 1 вариант
 - В source_dir должны лежать файлы с расширением source_extension

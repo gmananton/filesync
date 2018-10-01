@@ -11,12 +11,11 @@ public class Main {
 
         if (args.length < 8) {
             System.err.println("The app must be run as: \n" +
-                    "java -jar \n" +
+                    "java -jar app.jar\n" +
                     "-SD, --source-dir <source_dir> (or -SF, --source-file) \n" +
                     "-TD, --target-dir <target_dir> \n" +
                     "-SE, --source-extension <source_extension> \n" +
-                    "-TE, --target-extension <target_extension> \n" +
-                    "app.jar");
+                    "-TE, --target-extension <target_extension>");
 
             System.exit(1);
         }
@@ -28,7 +27,7 @@ public class Main {
         String sourceExtension = "";
         String targetExtension = "";
 
-        for (int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length - 1; i++) {
 
             String arg = args[i];
             String nextArg = args[i+1];
@@ -50,10 +49,12 @@ public class Main {
             }
         }
 
+        AbstractSynchronizer synchronizer;
+
         if (sourceFile.equals("")) {
-            new DirToDirSynchronizer(sourceDir, targetDir, sourceExtension, targetExtension);
+            new DirToDirSynchronizer(sourceDir, targetDir, sourceExtension, targetExtension).sync();
         } else {
-            new FileListSynchronizer(sourceFile, targetDir, sourceExtension, targetExtension);
+            new FileListSynchronizer(sourceFile, targetDir, sourceExtension, targetExtension).sync();
         }
     }
 

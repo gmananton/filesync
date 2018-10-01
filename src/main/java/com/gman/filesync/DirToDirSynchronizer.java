@@ -12,7 +12,7 @@ public class DirToDirSynchronizer extends AbstractSynchronizer {
     private final String sourceDir;
 
     public DirToDirSynchronizer(String sourceDir, String targetDir, String sourceExtension, String targetExtension) {
-        super(sourceExtension, targetExtension, targetDir);
+        super(targetDir, sourceExtension, targetExtension);
         this.sourceDir = sourceDir;
     }
 
