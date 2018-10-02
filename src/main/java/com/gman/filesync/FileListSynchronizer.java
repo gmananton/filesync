@@ -36,7 +36,7 @@ public class FileListSynchronizer extends AbstractSynchronizer {
             while ((line = br.readLine()) != null) {
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.find()) {
-                    result.add(Paths.get(matcher.group()));
+                    result.add(Paths.get(matcher.group().trim()));
                 }
             }
         } catch (FileNotFoundException e) {
